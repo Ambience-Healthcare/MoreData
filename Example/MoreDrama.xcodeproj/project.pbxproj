@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		831044552C6C21A1006C79EA /* MockDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831044542C6C21A1006C79EA /* MockDataGenerator.swift */; };
 		831044582C6C7C67006C79EA /* String+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831044572C6C7C67006C79EA /* String+Identifiable.swift */; };
+		83276B632C6DF1FC001F0D38 /* MoreData in Frameworks */ = {isa = PBXBuildFile; productRef = 83276B622C6DF1FC001F0D38 /* MoreData */; };
 		8335A99D2C65C9450077EE3F /* Person+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8335A99C2C65C9450077EE3F /* Person+Filter.swift */; };
 		8335A99F2C65CA2B0077EE3F /* Person+Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8335A99E2C65CA2B0077EE3F /* Person+Sort.swift */; };
 		8335A9A12C6852860077EE3F /* Statement+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8335A9A02C6852860077EE3F /* Statement+Filter.swift */; };
@@ -19,7 +20,6 @@
 		8335A9AD2C6853850077EE3F /* Statement+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8335A9A92C6853850077EE3F /* Statement+CoreDataProperties.swift */; };
 		8335A9AE2C6853850077EE3F /* Person+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8335A9AA2C6853850077EE3F /* Person+CoreDataClass.swift */; };
 		8335A9AF2C6853850077EE3F /* Person+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8335A9AB2C6853850077EE3F /* Person+CoreDataProperties.swift */; };
-		83A189002C69AC2600646C38 /* MoreData in Frameworks */ = {isa = PBXBuildFile; productRef = 83A188FF2C69AC2600646C38 /* MoreData */; };
 		83BA34312C65B2C40044A149 /* MoreDramaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BA34302C65B2C40044A149 /* MoreDramaApp.swift */; };
 		83BA34332C65B2C50044A149 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83BA34322C65B2C50044A149 /* Assets.xcassets */; };
 		83BA34362C65B2C50044A149 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83BA34352C65B2C50044A149 /* Preview Assets.xcassets */; };
@@ -79,7 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				83A189002C69AC2600646C38 /* MoreData in Frameworks */,
+				83276B632C6DF1FC001F0D38 /* MoreData in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,7 +243,7 @@
 			);
 			name = MoreDrama;
 			packageProductDependencies = (
-				83A188FF2C69AC2600646C38 /* MoreData */,
+				83276B622C6DF1FC001F0D38 /* MoreData */,
 			);
 			productName = MoreDrama;
 			productReference = 83BA342B2C65B2C40044A149 /* MoreDrama.app */;
@@ -318,7 +318,7 @@
 			);
 			mainGroup = 83BA34222C65B2C40044A149;
 			packageReferences = (
-				83A188FE2C69AC2600646C38 /* XCRemoteSwiftPackageReference "MoreData" */,
+				83276B612C6DF1FC001F0D38 /* XCRemoteSwiftPackageReference "MoreData" */,
 			);
 			productRefGroup = 83BA342C2C65B2C40044A149 /* Products */;
 			projectDirPath = "";
@@ -708,9 +708,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		83A188FE2C69AC2600646C38 /* XCRemoteSwiftPackageReference "MoreData" */ = {
+		83276B612C6DF1FC001F0D38 /* XCRemoteSwiftPackageReference "MoreData" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ChrisLaganiere/MoreData.git";
+			repositoryURL = "https://github.com/Ambience-Healthcare/MoreData";
 			requirement = {
 				branch = main;
 				kind = branch;
@@ -719,9 +719,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		83A188FF2C69AC2600646C38 /* MoreData */ = {
+		83276B622C6DF1FC001F0D38 /* MoreData */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 83A188FE2C69AC2600646C38 /* XCRemoteSwiftPackageReference "MoreData" */;
+			package = 83276B612C6DF1FC001F0D38 /* XCRemoteSwiftPackageReference "MoreData" */;
 			productName = MoreData;
 		};
 /* End XCSwiftPackageProductDependency section */

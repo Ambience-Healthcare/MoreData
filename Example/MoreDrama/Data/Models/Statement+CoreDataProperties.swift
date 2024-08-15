@@ -31,6 +31,6 @@ extension Statement {
 
 extension Statement : Identifiable {
     public var id: String {
-        content
+        statementID
     }
 }
