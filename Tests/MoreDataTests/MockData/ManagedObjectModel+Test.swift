@@ -1,3 +1,5 @@
+// Copyright © 2024 Ambience Healthcare
+
 import CoreData
 
 extension NSManagedObjectModel {
