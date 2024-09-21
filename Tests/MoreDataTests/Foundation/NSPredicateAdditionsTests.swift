@@ -4,7 +4,6 @@ import XCTest
 
 class NSPredicateExtensionsTests: XCTestCase {
 
-
     final class TestObject: NSObject {
         @objc var name: String
         @objc var age: Int
@@ -30,8 +29,13 @@ class NSPredicateExtensionsTests: XCTestCase {
     // MARK: - Strings and Other Objects
 
     func testMatchingString() {
-        let predicate = NSPredicate.matching(\TestObject.name, value: "John")
+        let predicate = NSPredicate.is(\TestObject.name, value: "John")
         XCTAssertEqual(predicate.predicateFormat, "name == \"John\"")
+    }
+
+    func testNotString() {
+        let predicate = NSPredicate.isNot(\TestObject.name, value: "John")
+        XCTAssertEqual(predicate.predicateFormat, "name != \"John\"")
     }
 
     func testIsNil() {
@@ -74,12 +78,12 @@ class NSPredicateExtensionsTests: XCTestCase {
     }
 
     func testTrue() {
-        let predicate = NSPredicate.true(\TestObject.isActive)
+        let predicate = NSPredicate.is(\TestObject.isActive, true)
         XCTAssertEqual(predicate.predicateFormat, "isActive == 1")
     }
 
     func testFalse() {
-        let predicate = NSPredicate.false(\TestObject.isActive)
+        let predicate = NSPredicate.is(\TestObject.isActive, false)
         XCTAssertEqual(predicate.predicateFormat, "isActive == 0")
     }
 
@@ -113,7 +117,7 @@ class NSPredicateExtensionsTests: XCTestCase {
     // MARK: - Collections
 
     func testContainsInCollection() {
-        let predicate = NSPredicate.contains(\TestObject.strings, value: "Lava")
+        let predicate = NSPredicate.contains(\TestObject.strings, element: "Lava")
         let testObject = TestObject()
         XCTAssertFalse(predicate.evaluate(with: testObject))
 

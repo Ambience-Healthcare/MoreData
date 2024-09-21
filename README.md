@@ -78,7 +78,7 @@ enum PersonFilter: Filtering {
     case nameContains(String)
     case ageGreaterThan(Int)
 
-    var predicate: NSPredicate? {
+    var predicate: NSPredicate {
         switch self {
         case .nameContains(let name):
             return .contains(\Person.name, substring: name)

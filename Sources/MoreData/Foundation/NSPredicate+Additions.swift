@@ -2,12 +2,19 @@
 
 import Foundation
 
+/// Useful Swifty wrappers for NSPredicate
+///
+/// See cheatsheet when adding changes: https://kapeli.com/cheat_sheets/NSPredicate.docset/Contents/Resources/Documents/index
 extension NSPredicate {
 
     // MARK: Strings and other objects
 
-    public static func matching<T: CVarArg>(_ keyPath: KeyPath<some Any, T>, value: T) -> NSPredicate {
+    public static func `is`<T: CVarArg>(_ keyPath: KeyPath<some Any, T>, value: T) -> NSPredicate {
         NSPredicate(format: "%K == %@", NSExpression(forKeyPath: keyPath).keyPath, value)
+    }
+
+    public static func isNot<T: CVarArg>(_ keyPath: KeyPath<some Any, T>, value: T) -> NSPredicate {
+        NSPredicate(format: "%K != %@", NSExpression(forKeyPath: keyPath).keyPath, value)
     }
 
     public static func isNil<T>(_ keyPath: KeyPath<some Any, T>) -> NSPredicate {
@@ -52,12 +59,8 @@ extension NSPredicate {
 
     // MARK: Booleans
 
-    public static func `true`(_ keyPath: KeyPath<some Any, Bool>) -> NSPredicate {
-        NSPredicate(format: "%K == YES", NSExpression(forKeyPath: keyPath).keyPath)
-    }
-
-    public static func `false`(_ keyPath: KeyPath<some Any, Bool>) -> NSPredicate {
-        NSPredicate(format: "%K == NO", NSExpression(forKeyPath: keyPath).keyPath)
+    public static func `is`(_ keyPath: KeyPath<some Any, Bool>, _ bool: Bool) -> NSPredicate {
+        NSPredicate(format: "%K == %@", NSExpression(forKeyPath: keyPath).keyPath, NSNumber(booleanLiteral: bool))
     }
 
     // MARK: Integers
@@ -88,12 +91,12 @@ extension NSPredicate {
 
     // MARK: Collections
 
-    public static func contains<T: CVarArg>(_ keyPath: KeyPath<some Any, NSSet>, value: T) -> NSPredicate {
-        NSPredicate(format: "%K CONTAINS %@", NSExpression(forKeyPath: keyPath).keyPath, value)
+    public static func contains<T: CVarArg>(_ keyPath: KeyPath<some Any, NSSet>, element: T) -> NSPredicate {
+        NSPredicate(format: "%K CONTAINS %@", NSExpression(forKeyPath: keyPath).keyPath, element)
     }
 
-    public static func contains<T: CVarArg>(_ keyPath: KeyPath<some Any, NSSet?>, value: T) -> NSPredicate {
-        NSPredicate(format: "%K CONTAINS %@", NSExpression(forKeyPath: keyPath).keyPath, value)
+    public static func contains<T: CVarArg>(_ keyPath: KeyPath<some Any, NSSet?>, element: T) -> NSPredicate {
+        NSPredicate(format: "%K CONTAINS %@", NSExpression(forKeyPath: keyPath).keyPath, element)
     }
 
     public static func `in`<T: CVarArg>(_ keyPath: KeyPath<some Any, T>, values: Set<T>) -> NSPredicate {
@@ -124,5 +127,27 @@ extension NSPredicate {
 
     public static func between(_ keyPath: KeyPath<some Any, Date>, startDate: Date, endDate: Date) -> NSPredicate {
         NSPredicate(format: "%K BETWEEN {%@, %@}", NSExpression(forKeyPath: keyPath).keyPath, startDate as NSDate, endDate as NSDate)
+    }
+
+    // MARK: Aggregates
+
+    public static func all() -> NSPredicate {
+        NSPredicate(value: true)
+    }
+
+    public static func all(_ predicates: [NSPredicate]) -> NSPredicate {
+        NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+    }
+
+    public static func any(_ predicates: [NSPredicate]) -> NSPredicate {
+        NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
+    }
+
+    public static func none() -> NSPredicate {
+        NSPredicate(value: false)
+    }
+
+    public static func not(_ predicate: NSPredicate) -> NSPredicate {
+        NSCompoundPredicate(notPredicateWithSubpredicate: predicate)
     }
 }
