@@ -3,29 +3,39 @@
 import Foundation
 
 extension NSPredicate {
+
+    // MARK: Strings and other objects
+
     public static func matching<T: CVarArg>(_ keyPath: KeyPath<some Any, T>, value: T) -> NSPredicate {
         NSPredicate(format: "%K == %@", NSExpression(forKeyPath: keyPath).keyPath, value)
     }
 
-    public static func matching(_ keyPath: KeyPath<some Any, Int>, value: Int) -> NSPredicate {
-        NSPredicate(format: "%K == %@", NSExpression(forKeyPath: keyPath).keyPath, value)
+    public static func isNil<T>(_ keyPath: KeyPath<some Any, T>) -> NSPredicate {
+        NSPredicate(format: "%K == nil", NSExpression(forKeyPath: keyPath).keyPath)
     }
 
-    public static func greaterThanOrEqualTo(_ keyPath: KeyPath<some Any, Int>, value: Int) -> NSPredicate {
-        NSPredicate(format: "%K >= %@", NSExpression(forKeyPath: keyPath).keyPath, value)
+    public static func isNotNil<T>(_ keyPath: KeyPath<some Any, T>) -> NSPredicate {
+        NSPredicate(format: "%K != nil", NSExpression(forKeyPath: keyPath).keyPath)
     }
 
-    public static func lessThanOrEqualTo(_ keyPath: KeyPath<some Any, Int>, value: Int) -> NSPredicate {
-        NSPredicate(format: "%K <= %@", NSExpression(forKeyPath: keyPath).keyPath, value)
+    // MARK: Strings
+
+    public static func contains(_ keyPath: KeyPath<some Any, String>, substring: String, caseInsensitive: Bool = false) -> NSPredicate {
+        let option = caseInsensitive ? "[c]" : ""
+        return NSPredicate(format: "%K CONTAINS\(option) %@", NSExpression(forKeyPath: keyPath).keyPath, substring)
     }
 
-    public static func greaterThan(_ keyPath: KeyPath<some Any, Int>, value: Int) -> NSPredicate {
-        NSPredicate(format: "%K > %@", NSExpression(forKeyPath: keyPath).keyPath, value)
+    public static func beginsWith(_ keyPath: KeyPath<some Any, String>, prefix: String, caseInsensitive: Bool = false) -> NSPredicate {
+        let option = caseInsensitive ? "[c]" : ""
+        return NSPredicate(format: "%K BEGINSWITH\(option) %@", NSExpression(forKeyPath: keyPath).keyPath, prefix)
     }
 
-    public static func lessThan(_ keyPath: KeyPath<some Any, Int>, value: Int) -> NSPredicate {
-        NSPredicate(format: "%K < %@", NSExpression(forKeyPath: keyPath).keyPath, value)
+    public static func endsWith(_ keyPath: KeyPath<some Any, String>, suffix: String, caseInsensitive: Bool = false) -> NSPredicate {
+        let option = caseInsensitive ? "[c]" : ""
+        return NSPredicate(format: "%K ENDSWITH\(option) %@", NSExpression(forKeyPath: keyPath).keyPath, suffix)
     }
+
+    // MARK: Booleans
 
     public static func `true`(_ keyPath: KeyPath<some Any, Bool>) -> NSPredicate {
         NSPredicate(format: "%K == YES", NSExpression(forKeyPath: keyPath).keyPath)
@@ -33,5 +43,51 @@ extension NSPredicate {
 
     public static func `false`(_ keyPath: KeyPath<some Any, Bool>) -> NSPredicate {
         NSPredicate(format: "%K == NO", NSExpression(forKeyPath: keyPath).keyPath)
+    }
+
+    // MARK: Integers
+
+    public static func equalTo(_ keyPath: KeyPath<some Any, Int>, value: Int) -> NSPredicate {
+        NSPredicate(format: "%K == %ld", NSExpression(forKeyPath: keyPath).keyPath, value)
+    }
+
+    public static func greaterThan(_ keyPath: KeyPath<some Any, Int>, value: Int) -> NSPredicate {
+        NSPredicate(format: "%K > %ld", NSExpression(forKeyPath: keyPath).keyPath, value)
+    }
+
+    public static func lessThan(_ keyPath: KeyPath<some Any, Int>, value: Int) -> NSPredicate {
+        NSPredicate(format: "%K < %ld", NSExpression(forKeyPath: keyPath).keyPath, value)
+    }
+
+    public static func greaterThanOrEqualTo(_ keyPath: KeyPath<some Any, Int>, value: Int) -> NSPredicate {
+        NSPredicate(format: "%K >= %ld", NSExpression(forKeyPath: keyPath).keyPath, value)
+    }
+
+    public static func lessThanOrEqualTo(_ keyPath: KeyPath<some Any, Int>, value: Int) -> NSPredicate {
+        NSPredicate(format: "%K <= %ld", NSExpression(forKeyPath: keyPath).keyPath, value)
+    }
+
+    public static func between(_ keyPath: KeyPath<some Any, Int>, lowerBound: Int, upperBound: Int) -> NSPredicate {
+        NSPredicate(format: "%K BETWEEN {%ld, %ld}", NSExpression(forKeyPath: keyPath).keyPath, lowerBound, upperBound)
+    }
+
+    // MARK: Collections
+
+    public static func `in`<T: CVarArg>(_ keyPath: KeyPath<some Any, T>, values: [T]) -> NSPredicate {
+        NSPredicate(format: "%K IN %@", NSExpression(forKeyPath: keyPath).keyPath, values)
+    }
+
+    // MARK: Dates
+
+    public static func before(_ keyPath: KeyPath<some Any, Date>, date: Date) -> NSPredicate {
+        NSPredicate(format: "%K < %@", NSExpression(forKeyPath: keyPath).keyPath, date as NSDate)
+    }
+
+    public static func after(_ keyPath: KeyPath<some Any, Date>, date: Date) -> NSPredicate {
+        NSPredicate(format: "%K > %@", NSExpression(forKeyPath: keyPath).keyPath, date as NSDate)
+    }
+
+    public static func between(_ keyPath: KeyPath<some Any, Date>, startDate: Date, endDate: Date) -> NSPredicate {
+        NSPredicate(format: "%K BETWEEN {%@, %@}", NSExpression(forKeyPath: keyPath).keyPath, startDate as NSDate, endDate as NSDate)
     }
 }

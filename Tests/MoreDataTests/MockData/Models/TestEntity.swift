@@ -1,6 +1,10 @@
+// Copyright © 2024 Ambience Healthcare
+
 import CoreData
-@testable import MoreData
 import XCTest
+@testable import MoreData
+
+// MARK: - TestEntityFilter
 
 enum TestEntityFilter: Filtering {
     case nameContains(String)
@@ -19,6 +23,8 @@ enum TestEntityFilter: Filtering {
     }
 }
 
+// MARK: - TestEntitySort
+
 enum TestEntitySort: Sorting {
     case nameAscending
 
@@ -31,13 +37,15 @@ enum TestEntitySort: Sorting {
 }
 
 // MARK: - TestEntity
+
 class TestEntity: NSManagedObject, Fetchable {
-    @NSManaged var name: String?
+    typealias Filter = TestEntityFilter
+    typealias Sort = TestEntitySort
 
     static var entityName: String { "TestEntity" }
 
-    typealias Filter = TestEntityFilter
-    typealias Sort = TestEntitySort
+    @NSManaged var name: String?
+
 }
 
 extension NSManagedObjectModel {

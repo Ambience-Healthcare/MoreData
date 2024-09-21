@@ -1,5 +1,7 @@
-import XCTest
+// Copyright © 2024 Ambience Healthcare
+
 import CoreData
+import XCTest
 @testable import MoreData
 
 final class FilteringTests: XCTestCase {
@@ -21,7 +23,7 @@ final class FilteringTests: XCTestCase {
         let filters: [TestEntityFilter] = [
             .nameContains("Alice"),
             .ageGreaterThan(25),
-            .isActive(true)
+            .isActive(true),
         ]
 
         // When
@@ -48,7 +50,7 @@ final class FilteringTests: XCTestCase {
         let filters: [TestEntityFilter] = [
             .nameContains("Alice"),
             .ageGreaterThan(25),
-            .isActive(true)
+            .isActive(true),
         ]
 
         // When
