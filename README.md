@@ -106,7 +106,7 @@ enum PersonSort: Sorting {
     var sortDescriptors: [NSSortDescriptor] {
         switch self {
         case .nameAscending:
-            return [NSSortDescriptor(key: "name", ascending: true)]
+            return [NSSortDescriptor(keyPath: \Person.name, ascending: true)]
         }
     }
 }
