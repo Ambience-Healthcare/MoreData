@@ -3,13 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		831044552C6C21A1006C79EA /* MockDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831044542C6C21A1006C79EA /* MockDataGenerator.swift */; };
 		831044582C6C7C67006C79EA /* String+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831044572C6C7C67006C79EA /* String+Identifiable.swift */; };
-		83276B632C6DF1FC001F0D38 /* MoreData in Frameworks */ = {isa = PBXBuildFile; productRef = 83276B622C6DF1FC001F0D38 /* MoreData */; };
+		831439FF2C9E8BB900DF75B2 /* MoreData in Frameworks */ = {isa = PBXBuildFile; productRef = 831439FE2C9E8BB900DF75B2 /* MoreData */; };
 		8335A99D2C65C9450077EE3F /* Person+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8335A99C2C65C9450077EE3F /* Person+Filter.swift */; };
 		8335A99F2C65CA2B0077EE3F /* Person+Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8335A99E2C65CA2B0077EE3F /* Person+Sort.swift */; };
 		8335A9A12C6852860077EE3F /* Statement+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8335A9A02C6852860077EE3F /* Statement+Filter.swift */; };
@@ -79,7 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				83276B632C6DF1FC001F0D38 /* MoreData in Frameworks */,
+				831439FF2C9E8BB900DF75B2 /* MoreData in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,7 +243,7 @@
 			);
 			name = MoreDrama;
 			packageProductDependencies = (
-				83276B622C6DF1FC001F0D38 /* MoreData */,
+				831439FE2C9E8BB900DF75B2 /* MoreData */,
 			);
 			productName = MoreDrama;
 			productReference = 83BA342B2C65B2C40044A149 /* MoreDrama.app */;
@@ -318,7 +318,7 @@
 			);
 			mainGroup = 83BA34222C65B2C40044A149;
 			packageReferences = (
-				83276B612C6DF1FC001F0D38 /* XCRemoteSwiftPackageReference "MoreData" */,
+				831439FD2C9E8BB900DF75B2 /* XCLocalSwiftPackageReference "../../MoreData3" */,
 			);
 			productRefGroup = 83BA342C2C65B2C40044A149 /* Products */;
 			projectDirPath = "";
@@ -707,21 +707,16 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		83276B612C6DF1FC001F0D38 /* XCRemoteSwiftPackageReference "MoreData" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Ambience-Healthcare/MoreData";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
+/* Begin XCLocalSwiftPackageReference section */
+		831439FD2C9E8BB900DF75B2 /* XCLocalSwiftPackageReference "../../MoreData3" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../../MoreData3;
 		};
-/* End XCRemoteSwiftPackageReference section */
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		83276B622C6DF1FC001F0D38 /* MoreData */ = {
+		831439FE2C9E8BB900DF75B2 /* MoreData */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 83276B612C6DF1FC001F0D38 /* XCRemoteSwiftPackageReference "MoreData" */;
 			productName = MoreData;
 		};
 /* End XCSwiftPackageProductDependency section */

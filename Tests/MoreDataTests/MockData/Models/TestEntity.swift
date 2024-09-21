@@ -8,17 +8,14 @@ import XCTest
 
 enum TestEntityFilter: Filtering {
     case nameContains(String)
-    case ageGreaterThan(Int)
     case isActive(Bool)
 
-    var predicate: NSPredicate? {
+    var predicate: NSPredicate {
         switch self {
         case .nameContains(let name):
-            return NSPredicate(format: "name CONTAINS[cd] %@", name)
-        case .ageGreaterThan(let age):
-            return NSPredicate(format: "age > %d", age)
+            return .contains(\TestEntity.name, substring: name)
         case .isActive(let isActive):
-            return NSPredicate(format: "isActive == %@", NSNumber(value: isActive))
+            return .is(\TestEntity.isActive, isActive)
         }
     }
 }
@@ -31,7 +28,7 @@ enum TestEntitySort: Sorting {
     var sortDescriptors: [NSSortDescriptor] {
         switch self {
         case .nameAscending:
-            return [NSSortDescriptor(key: "name", ascending: true)]
+            return [NSSortDescriptor(keyPath: \TestEntity.name, ascending: true)]
         }
     }
 }
@@ -42,9 +39,12 @@ class TestEntity: NSManagedObject, Fetchable {
     typealias Filter = TestEntityFilter
     typealias Sort = TestEntitySort
 
-    static var entityName: String { "TestEntity" }
+    static var entityName: String {
+        "TestEntity"
+    }
 
     @NSManaged var name: String?
+    @NSManaged var isActive: Bool
 
 }
 
@@ -60,7 +60,13 @@ extension NSManagedObjectModel {
         nameAttribute.attributeType = .stringAttributeType
         nameAttribute.isOptional = true
 
-        entity.properties = [nameAttribute]
+        let isActiveAttribute = NSAttributeDescription()
+        isActiveAttribute.name = "isActive"
+        isActiveAttribute.attributeType = .booleanAttributeType
+        isActiveAttribute.isOptional = false
+        isActiveAttribute.defaultValue = true
+
+        entity.properties = [nameAttribute, isActiveAttribute]
         model.entities = [entity]
         return model
     }

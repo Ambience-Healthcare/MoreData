@@ -4,26 +4,38 @@ import XCTest
 
 class NSPredicateExtensionsTests: XCTestCase {
 
-
     final class TestObject: NSObject {
         @objc var name: String
         @objc var age: Int
         @objc var isActive: Bool
         @objc var createdAt: Date
+        @objc var strings: NSSet
 
-        init(name: String, age: Int, isActive: Bool, createdAt: Date) {
+        init(
+            name: String = "Shelster",
+            age: Int = 26,
+            isActive: Bool = false,
+            createdAt: Date = .now,
+            strings: NSSet = .init()
+        ) {
             self.name = name
             self.age = age
             self.isActive = isActive
             self.createdAt = createdAt
+            self.strings = strings
         }
     }
 
     // MARK: - Strings and Other Objects
 
     func testMatchingString() {
-        let predicate = NSPredicate.matching(\TestObject.name, value: "John")
+        let predicate = NSPredicate.is(\TestObject.name, value: "John")
         XCTAssertEqual(predicate.predicateFormat, "name == \"John\"")
+    }
+
+    func testNotString() {
+        let predicate = NSPredicate.isNot(\TestObject.name, value: "John")
+        XCTAssertEqual(predicate.predicateFormat, "name != \"John\"")
     }
 
     func testIsNil() {
@@ -66,12 +78,12 @@ class NSPredicateExtensionsTests: XCTestCase {
     }
 
     func testTrue() {
-        let predicate = NSPredicate.true(\TestObject.isActive)
+        let predicate = NSPredicate.is(\TestObject.isActive, true)
         XCTAssertEqual(predicate.predicateFormat, "isActive == 1")
     }
 
     func testFalse() {
-        let predicate = NSPredicate.false(\TestObject.isActive)
+        let predicate = NSPredicate.is(\TestObject.isActive, false)
         XCTAssertEqual(predicate.predicateFormat, "isActive == 0")
     }
 
@@ -104,9 +116,27 @@ class NSPredicateExtensionsTests: XCTestCase {
 
     // MARK: - Collections
 
+    func testContainsInCollection() {
+        let predicate = NSPredicate.contains(\TestObject.strings, element: "Lava")
+        let testObject = TestObject()
+        XCTAssertFalse(predicate.evaluate(with: testObject))
+
+        let testObject2 = TestObject(strings: ["Lava"])
+        XCTAssertTrue(predicate.evaluate(with: testObject2))
+    }
+
     func testIn() {
         let predicate = NSPredicate.in(\TestObject.age, values: [18, 25, 30])
         XCTAssertEqual(predicate.predicateFormat, "age IN {18, 25, 30}")
+    }
+
+    func testInSet() {
+        let predicate = NSPredicate.in(\TestObject.age, values: Set([18, 25, 30]))
+        let testObject = TestObject(age: 27)
+        XCTAssertFalse(predicate.evaluate(with: testObject))
+
+        let testObject2 = TestObject(age: 25)
+        XCTAssertTrue(predicate.evaluate(with: testObject2))
     }
 
     // MARK: - Dates
@@ -116,7 +146,7 @@ class NSPredicateExtensionsTests: XCTestCase {
         let futureDate = Date().addingTimeInterval(1000) // 1000 seconds in the future
         let now = Date()
 
-        let testObject = TestObject(name: "Test", age: 25, isActive: true, createdAt: now)
+        let testObject = TestObject(createdAt: now)
 
         let predicate = NSPredicate.after(\TestObject.createdAt, date: pastDate)
 
@@ -124,13 +154,13 @@ class NSPredicateExtensionsTests: XCTestCase {
         XCTAssertTrue(predicate.evaluate(with: testObject))
 
         // A different object where createdAt is in the past
-        let oldObject = TestObject(name: "Old", age: 30, isActive: false, createdAt: pastDate)
+        let oldObject = TestObject(createdAt: pastDate)
 
         // This should return false since "pastDate" is not after itself
         XCTAssertFalse(predicate.evaluate(with: oldObject))
 
         // This should return true since "futureDate" is after "now"
-        let futureObject = TestObject(name: "Future", age: 35, isActive: false, createdAt: futureDate)
+        let futureObject = TestObject(createdAt: futureDate)
         XCTAssertTrue(predicate.evaluate(with: futureObject))
     }
 
@@ -139,7 +169,7 @@ class NSPredicateExtensionsTests: XCTestCase {
         let futureDate = Date().addingTimeInterval(1000) // 1000 seconds in the future
         let now = Date()
 
-        let testObject = TestObject(name: "Test", age: 25, isActive: true, createdAt: now)
+        let testObject = TestObject(createdAt: now)
 
         let predicate = NSPredicate.before(\TestObject.createdAt, date: futureDate)
 
@@ -147,13 +177,13 @@ class NSPredicateExtensionsTests: XCTestCase {
         XCTAssertTrue(predicate.evaluate(with: testObject))
 
         // A different object where createdAt is in the future
-        let futureObject = TestObject(name: "Future", age: 35, isActive: false, createdAt: futureDate)
+        let futureObject = TestObject(createdAt: futureDate)
 
         // This should return false since "futureDate" is not before itself
         XCTAssertFalse(predicate.evaluate(with: futureObject))
 
         // This should return true since "pastDate" is before "now"
-        let pastObject = TestObject(name: "Past", age: 30, isActive: false, createdAt: pastDate)
+        let pastObject = TestObject(createdAt: pastDate)
         XCTAssertTrue(predicate.evaluate(with: pastObject))
     }
 
@@ -162,7 +192,7 @@ class NSPredicateExtensionsTests: XCTestCase {
         let endDate = Date().addingTimeInterval(1000) // 1000 seconds in the future
         let now = Date()
 
-        let testObject = TestObject(name: "Test", age: 25, isActive: true, createdAt: now)
+        let testObject = TestObject(createdAt: now)
 
         let predicate = NSPredicate.between(\TestObject.createdAt, startDate: startDate, endDate: endDate)
 
@@ -170,13 +200,13 @@ class NSPredicateExtensionsTests: XCTestCase {
         XCTAssertTrue(predicate.evaluate(with: testObject))
 
         // A different object where createdAt is before startDate
-        let oldObject = TestObject(name: "Old", age: 30, isActive: false, createdAt: startDate.addingTimeInterval(-1))
+        let oldObject = TestObject(createdAt: startDate.addingTimeInterval(-1))
 
         // This should return false since "createdAt" is before "startDate"
         XCTAssertFalse(predicate.evaluate(with: oldObject))
 
         // A different object where createdAt is after endDate
-        let futureObject = TestObject(name: "Future", age: 35, isActive: false, createdAt: endDate.addingTimeInterval(1))
+        let futureObject = TestObject(createdAt: endDate.addingTimeInterval(1))
 
         // This should return false since "createdAt" is after "endDate"
         XCTAssertFalse(predicate.evaluate(with: futureObject))

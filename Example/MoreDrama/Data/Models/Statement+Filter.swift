@@ -16,23 +16,23 @@ public enum StatementFilter: Filtering {
     case all([StatementFilter])
     case noElements
 
-    public var predicate: NSPredicate? {
+    public var predicate: NSPredicate {
         switch self {
 
         case .contains(let query):
-            return NSPredicate(format: "%K CONTAINS[cd] %@", #keyPath(Statement.content), query)
+            return .contains(\Statement.content, substring: query, caseInsensitive: true)
 
         case .toldBy(let person):
-            return NSPredicate(format: "%K == %@", #keyPath(Statement.by), person)
+            return .is(\Statement.by, value: person)
 
         case .toldTo(let person):
-            return NSPredicate(format: "%@ IN %K", person, #keyPath(Statement.to))
+            return .contains(\Statement.to, element: person)
 
         case .all(let filters):
             return NSCompoundPredicate(andPredicateWithSubpredicates: filters.compactMap(\.predicate))
 
         case .noElements:
-            return NSPredicate(format: "%K == %@", #keyPath(Statement.statementID), "bogus")
+            return .none()
         }
     }
 
