@@ -25,12 +25,27 @@ extension NSPredicate {
         return NSPredicate(format: "%K CONTAINS\(option) %@", NSExpression(forKeyPath: keyPath).keyPath, substring)
     }
 
+    public static func contains(_ keyPath: KeyPath<some Any, String?>, substring: String, caseInsensitive: Bool = false) -> NSPredicate {
+        let option = caseInsensitive ? "[c]" : ""
+        return NSPredicate(format: "%K CONTAINS\(option) %@", NSExpression(forKeyPath: keyPath).keyPath, substring)
+    }
+
     public static func beginsWith(_ keyPath: KeyPath<some Any, String>, prefix: String, caseInsensitive: Bool = false) -> NSPredicate {
         let option = caseInsensitive ? "[c]" : ""
         return NSPredicate(format: "%K BEGINSWITH\(option) %@", NSExpression(forKeyPath: keyPath).keyPath, prefix)
     }
 
+    public static func beginsWith(_ keyPath: KeyPath<some Any, String?>, prefix: String, caseInsensitive: Bool = false) -> NSPredicate {
+        let option = caseInsensitive ? "[c]" : ""
+        return NSPredicate(format: "%K BEGINSWITH\(option) %@", NSExpression(forKeyPath: keyPath).keyPath, prefix)
+    }
+
     public static func endsWith(_ keyPath: KeyPath<some Any, String>, suffix: String, caseInsensitive: Bool = false) -> NSPredicate {
+        let option = caseInsensitive ? "[c]" : ""
+        return NSPredicate(format: "%K ENDSWITH\(option) %@", NSExpression(forKeyPath: keyPath).keyPath, suffix)
+    }
+
+    public static func endsWith(_ keyPath: KeyPath<some Any, String?>, suffix: String, caseInsensitive: Bool = false) -> NSPredicate {
         let option = caseInsensitive ? "[c]" : ""
         return NSPredicate(format: "%K ENDSWITH\(option) %@", NSExpression(forKeyPath: keyPath).keyPath, suffix)
     }
@@ -73,7 +88,27 @@ extension NSPredicate {
 
     // MARK: Collections
 
+    public static func contains<T: CVarArg>(_ keyPath: KeyPath<some Any, NSSet>, value: T) -> NSPredicate {
+        NSPredicate(format: "%K CONTAINS %@", NSExpression(forKeyPath: keyPath).keyPath, value)
+    }
+
+    public static func contains<T: CVarArg>(_ keyPath: KeyPath<some Any, NSSet?>, value: T) -> NSPredicate {
+        NSPredicate(format: "%K CONTAINS %@", NSExpression(forKeyPath: keyPath).keyPath, value)
+    }
+
+    public static func `in`<T: CVarArg>(_ keyPath: KeyPath<some Any, T>, values: Set<T>) -> NSPredicate {
+        NSPredicate(format: "%K IN %@", NSExpression(forKeyPath: keyPath).keyPath, values)
+    }
+
     public static func `in`<T: CVarArg>(_ keyPath: KeyPath<some Any, T>, values: [T]) -> NSPredicate {
+        NSPredicate(format: "%K IN %@", NSExpression(forKeyPath: keyPath).keyPath, values)
+    }
+
+    public static func `in`<T: CVarArg>(_ keyPath: KeyPath<some Any, T?>, values: Set<T>) -> NSPredicate {
+        NSPredicate(format: "%K IN %@", NSExpression(forKeyPath: keyPath).keyPath, values)
+    }
+
+    public static func `in`<T: CVarArg>(_ keyPath: KeyPath<some Any, T?>, values: [T]) -> NSPredicate {
         NSPredicate(format: "%K IN %@", NSExpression(forKeyPath: keyPath).keyPath, values)
     }
 

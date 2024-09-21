@@ -46,7 +46,7 @@ import MoreData
 
 class Person: NSManagedObject {
     @NSManaged var name: String?
-    @NSManaged var age: Int16
+    @NSManaged var age: Int
 
     static var entityName: String {
         return "Person"
@@ -81,9 +81,9 @@ enum PersonFilter: Filtering {
     var predicate: NSPredicate? {
         switch self {
         case .nameContains(let name):
-            return NSPredicate(format: "name CONTAINS[cd] %@", name)
+            return .contains(\Person.name, substring: name)
         case .ageGreaterThan(let age):
-            return NSPredicate(format: "age > %d", age)
+            return .greaterThanOrEqualTo(\Person.age, value: 25)
         }
     }
 }
