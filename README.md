@@ -28,7 +28,7 @@ To integrate `MoreData` into your project using [Swift Package Manager](https://
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/ChrisLaganiere/MoreData.git", from: "1.0.0")
+    .package(url: "https://github.com/ChrisLaganiere/MoreData.git", from: "2.0.2")
 ]
 ```
 
