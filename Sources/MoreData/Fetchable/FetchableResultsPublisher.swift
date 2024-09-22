@@ -165,6 +165,13 @@ public class FetchableResultsPublisher<ResultType>: NSObject, NSFetchedResultsCo
         // https://developer.apple.com/documentation/coredata/nsfetchedresultscontroller#overview
         frc.delegate = self
         try frc.performFetch()
+
+        // Initial diff: inserting all objects
+        diff = .init(
+            frc.fetchedObjects?.enumerated().map({ (index, entity) in
+                CollectionDifference<NSManagedObjectID>.Change.insert(offset: index, element: entity.objectID, associatedWith: nil)
+            }) ?? []
+        )
     }
 
     /// Stops monitoring changes and pauses the fetch operation.
