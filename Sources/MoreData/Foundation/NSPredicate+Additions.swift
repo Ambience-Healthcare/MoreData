@@ -99,19 +99,19 @@ extension NSPredicate {
         NSPredicate(format: "%K CONTAINS %@", NSExpression(forKeyPath: keyPath).keyPath, element)
     }
 
-    public static func `in`<T: CVarArg>(_ keyPath: KeyPath<some Any, T>, values: Set<T>) -> NSPredicate {
+    public static func `in`<T>(_ keyPath: KeyPath<some Any, T>, values: Set<T>) -> NSPredicate {
         NSPredicate(format: "%K IN %@", NSExpression(forKeyPath: keyPath).keyPath, values)
     }
 
-    public static func `in`<T: CVarArg>(_ keyPath: KeyPath<some Any, T>, values: [T]) -> NSPredicate {
+    public static func `in`<T>(_ keyPath: KeyPath<some Any, T>, values: [T]) -> NSPredicate {
         NSPredicate(format: "%K IN %@", NSExpression(forKeyPath: keyPath).keyPath, values)
     }
 
-    public static func `in`<T: CVarArg>(_ keyPath: KeyPath<some Any, T?>, values: Set<T>) -> NSPredicate {
+    public static func `in`<T>(_ keyPath: KeyPath<some Any, T?>, values: Set<T>) -> NSPredicate {
         NSPredicate(format: "%K IN %@", NSExpression(forKeyPath: keyPath).keyPath, values)
     }
 
-    public static func `in`<T: CVarArg>(_ keyPath: KeyPath<some Any, T?>, values: [T]) -> NSPredicate {
+    public static func `in`<T>(_ keyPath: KeyPath<some Any, T?>, values: [T]) -> NSPredicate {
         NSPredicate(format: "%K IN %@", NSExpression(forKeyPath: keyPath).keyPath, values)
     }
 
